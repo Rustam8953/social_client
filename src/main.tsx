@@ -5,8 +5,10 @@ import App from "./App"
 import { store } from "./app/store"
 import "./index.css"
 import {NextUIProvider} from "@nextui-org/react";
+import { createBrowserRouter } from "react-router-dom"
+import { ThemeProvider } from "./components/theme-provider"
 
-const container = document.getElementById("root")
+const container = document.getElementById("root");
 
 if (container) {
   const root = createRoot(container)
@@ -14,7 +16,9 @@ if (container) {
     <React.StrictMode>
       <Provider store={store}>
         <NextUIProvider>
-          <App />
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
         </NextUIProvider>
       </Provider>
     </React.StrictMode>,
