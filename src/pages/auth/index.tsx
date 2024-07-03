@@ -1,7 +1,7 @@
 import React from 'react'
 
-export const CurrentPost = () => {
+export const Auth = () => {
   return (
-    <div>CurrentPost</div>
+    <div>Auth</div>
   )
 }
