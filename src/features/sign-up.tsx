@@ -3,6 +3,8 @@ import { useRegisterMutation } from '../app/services/userApi';
 import { useForm } from 'react-hook-form';
 import { Input } from '../components/input';
 import { Button, Link } from '@nextui-org/react';
+import { hasErrorField } from '../utils/has-error-field';
+import { ErrorMessage } from '../components/errorMessge';
 
 type Reg = {
     email: string;
@@ -29,8 +31,11 @@ export const SignUp = ({setSelected}: Props) => {
     const onSubmit = async (data: Reg) => {
         try {
             await register(data).unwrap();
+            setSelected('login');
         } catch (error) {
-            
+            if(hasErrorField(error)) {
+                setError(error.data.error);
+            }
         }
     }
     return (
@@ -56,6 +61,7 @@ export const SignUp = ({setSelected}: Props) => {
                 type='text'
                 required='Введите ваше имя'
             />
+            <ErrorMessage error={error} />
             <p className="text-small">
                 Есть аккаунт?{" "}
                 <Link
