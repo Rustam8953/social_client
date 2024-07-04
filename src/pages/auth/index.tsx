@@ -1,6 +1,7 @@
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 import React, { useState } from 'react'
 import { Login } from '../../features/login';
+import { SignUp } from '../../features/sign-up';
 
 export const Auth = () => {
   const [selected, setSelected] = useState('login');
@@ -18,7 +19,7 @@ export const Auth = () => {
                 <Login setSelected={setSelected} />
               </Tab>
               <Tab key="sign-up" title="Регистрация">
-                Регистрация
+                <SignUp setSelected={setSelected} />
               </Tab>
             </Tabs>
           </CardBody>
