@@ -36,7 +36,7 @@ export const Login = ({setSelected}: Props) => {
     const onSubmit = async (data: Login) => {
         try {
             await login(data).unwrap();
-            await triggerCurrentQuery();
+            await triggerCurrentQuery().unwrap();
             navigate('/');
         } catch (error) {
             if(hasErrorField(error)) {
