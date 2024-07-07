@@ -1,41 +1,37 @@
 import React, { useState } from 'react'
+import { useRegisterMutation } from '../../app/services/userApi';
 import { useForm } from 'react-hook-form';
-import { Input } from '../components/input';
+import { Input } from '../../components/input';
 import { Button, Link } from '@nextui-org/react';
-import { useLazyCurrentQuery, useLoginMutation } from '../app/services/userApi';
-import { useNavigate } from 'react-router-dom';
-import { ErrorMessage } from '../components/errorMessge';
-import { hasErrorField } from '../utils/has-error-field';
+import { hasErrorField } from '../../utils/has-error-field';
+import { ErrorMessage } from '../../components/errorMessge';
 
-type Login = {
+type Reg = {
     email: string;
     password: string;
+    name: string;
 }
 
 type Props = {
     setSelected: (value: string) => void;
 }
 
-export const Login = ({setSelected}: Props) => {
-    const {
-        handleSubmit,
-        control,
-        formState: {errors}
-    } = useForm<Login>({
-        mode: "onChange",
+export const SignUp = ({setSelected}: Props) => {
+    const {handleSubmit, control, formState: {errors}} = useForm<Reg>({
+        mode: 'onChange',
         reValidateMode: "onBlur",
         defaultValues: {
             email: '',
-            password: ''
+            password: '',
+            name: ''
         }
-    });
-    const [login, {isLoading}] = useLoginMutation();
-    const navigate = useNavigate();
+    })
+    const [register, {isLoading}] = useRegisterMutation();
     const [error, setError] = useState('');
-    const [triggerCurrentQuery] = useLazyCurrentQuery();
-    const onSubmit = async (data: Login) => {
+    const onSubmit = async (data: Reg) => {
         try {
-            await login(data).unwrap();
+            await register(data).unwrap();
+            setSelected('login');
         } catch (error) {
             if(hasErrorField(error)) {
                 setError(error.data.error);
@@ -45,33 +41,40 @@ export const Login = ({setSelected}: Props) => {
     return (
         <form className='flex flex-col gap-4' onSubmit={handleSubmit(onSubmit)}>
             <Input 
-                control={control}
                 name='email'
-                label='Email'
+                label='Логин'
+                control={control}
                 type='email'
-                required='Введите почту'
+                required='Введите вашу почту'
             />
             <Input 
-                control={control}
                 name='password'
                 label='Пароль'
+                control={control}
                 type='password'
                 required='Введите пароль'
             />
+            <Input 
+                name='name'
+                label='Имя'
+                control={control}
+                type='text'
+                required='Введите ваше имя'
+            />
             <ErrorMessage error={error} />
             <p className="text-small">
-                Нет аккаунта?{" "}
+                Есть аккаунт?{" "}
                 <Link
                     size='sm'
                     className='cursor-pointer'
-                    onPress={() => setSelected('sign-up')}
+                    onPress={() => setSelected('login')}
                 >
-                    Зарегестрироваться
+                    Войти
                 </Link>
             </p>
             <div className="flex gap-2 justify-end">
                 <Button fullWidth color='primary' type='submit' isLoading={isLoading}>
-                    Войти
+                    Зарегистрироваться
                 </Button>
             </div>
         </form>
