@@ -11,7 +11,7 @@ import { formatToClientDate } from '../../utils/format-to-client-date';
 import { RiDeleteBinLine } from 'react-icons/ri';
 import { Typeograph } from '../typeograph';
 import { MetaInfo } from '../metainfo';
-import { FcDislike } from 'react-icons/fc';
+import { FcLike } from 'react-icons/fc';
 import { MdOutlineFavoriteBorder } from 'react-icons/md';
 import { FaRegComment } from 'react-icons/fa';
 import { ErrorMessage } from '../errorMessge';
@@ -68,6 +68,19 @@ export const Card = ({
             default:
                 throw new Error('Неверный аргумент cardFor');
         }   
+    }
+
+    const handleClick = async () => {
+        try {
+            likedByUser ? await unlike(id).unwrap() : await likePost({postId: id}).unwrap()
+            await refetchPosts();
+        } catch (error) {
+            if(hasErrorField(error)) {
+                setError(error.data.error);
+            } else {
+                setError(error as string);
+            }
+        }
     }
 
     const handleDelete = async () => {
@@ -128,10 +141,10 @@ export const Card = ({
                 cardFor !== 'comment' && (
                     <CardFooter className="gap-3">
                         <div className="flex gap-5 items-">
-                            <div>
+                            <div onClick={handleClick}>
                                 <MetaInfo 
                                     count={likesCount} 
-                                    Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder} 
+                                    Icon={likedByUser ? FcLike : MdOutlineFavoriteBorder} 
                                 />
                             </div>
                             <Link to={`posts/${id}`}>
