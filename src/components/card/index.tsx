@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {CardBody, CardHeader, Card as NextUiCard, Spinner} from '@nextui-org/react';
+import {CardBody, CardFooter, CardHeader, Card as NextUiCard, Spinner} from '@nextui-org/react';
 import { useAddLikeMutation, useUnlikeMutation } from '../../app/services/likeApi';
 import { useDeletePostMutation, useLazyGetAllPostsQuery, useLazyGetPostByIdQuery } from '../../app/services/postsApi';
 import { useDeleteCommentMutation } from '../../app/services/commentsApi';
@@ -9,6 +9,12 @@ import { selectCurrent } from '../../features/user/user-slice';
 import { User } from '../user';
 import { formatToClientDate } from '../../utils/format-to-client-date';
 import { RiDeleteBinLine } from 'react-icons/ri';
+import { Typeograph } from '../typeograph';
+import { MetaInfo } from '../metainfo';
+import { FcDislike } from 'react-icons/fc';
+import { MdOutlineFavoriteBorder } from 'react-icons/md';
+import { FaRegComment } from 'react-icons/fa';
+import { ErrorMessage } from '../errorMessge';
 
 type Props = {
     avatarUrl: string;
@@ -47,7 +53,7 @@ export const Card = ({
     const navigate = useNavigate();
     const currentUser = useSelector(selectCurrent);
     return (
-        <NextUiCard>
+        <NextUiCard className='mb-5'>
             <CardHeader className='justify-between items-center bg-transparent'>
                 <Link to={`/user/${authorId}`}>
                     <User 
@@ -71,6 +77,27 @@ export const Card = ({
                     )
                 }
             </CardHeader>
+            <CardBody className='px-3 py-2 mb-5'>
+                <Typeograph>{content}</Typeograph>
+            </CardBody>
+            {
+                cardFor !== 'comment' && (
+                    <CardFooter className="gap-3">
+                        <div className="flex gap-5 items-">
+                            <div>
+                                <MetaInfo 
+                                    count={likesCount} 
+                                    Icon={likedByUser ? FcDislike : MdOutlineFavoriteBorder} 
+                                />
+                            </div>
+                            <Link to={`posts/${id}`}>
+                                <MetaInfo count={commentsCount} Icon={FaRegComment} />
+                            </Link>
+                        </div>
+                        <ErrorMessage error={error} />
+                    </CardFooter>
+                )
+            }
         </NextUiCard>
     )
 }
