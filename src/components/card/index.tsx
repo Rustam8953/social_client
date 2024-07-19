@@ -112,7 +112,7 @@ export const Card = ({
     return (
         <NextUiCard className='mb-5'>
             <CardHeader className='justify-between items-center bg-transparent'>
-                <Link to={`/user/${authorId}`}>
+                <Link to={`/users/${authorId}`}>
                     <User 
                         name={name}
                         className='text-small font-semibold leading-non text-default'
