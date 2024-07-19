@@ -17,7 +17,7 @@ export const MetaInfo = ({
                 </p>
             )
         }
-        <p className="text-default-400 text-exel hover:text-2xl ease-in duration-100">
+        <p className="text-default-400 text-exel ease-in duration-100">
             <Icon />
         </p>
     </div>

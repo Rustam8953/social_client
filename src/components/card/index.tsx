@@ -95,7 +95,7 @@ export const Card = ({
                     navigate('/');
                     break;
                 case 'comment':
-                    await deleteComment(id).unwrap();
+                    await deleteComment(commentId).unwrap();
                     await refetchPosts();
                     break;
                 default:
@@ -140,7 +140,7 @@ export const Card = ({
             {
                 cardFor !== 'comment' && (
                     <CardFooter className="gap-3">
-                        <div className="flex gap-5 items-">
+                        <div className="flex gap-5 items-center">
                             <div onClick={handleClick}>
                                 <MetaInfo 
                                     count={likesCount} 
