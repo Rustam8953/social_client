@@ -20,6 +20,7 @@ export type User = {
 export type Follows = {
     id: string,
     follower: User,
+    following: User,
     followerId: string,
     followingId: string,
 }
