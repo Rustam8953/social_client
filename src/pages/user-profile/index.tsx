@@ -27,6 +27,19 @@ export const UserProfile = () => {
   useEffect(() => () => {
     dispatch(resetUser())
   }, [])
+  const handleFollow = async () => {
+    try {
+      if(id) {
+        data?.isFollowing ?
+          await unfollow(id).unwrap()
+          : await followUser({followingId: id}).unwrap();
+        await triggerGetUserByIdQuery(id);
+        await triggerCurrentQuery();
+      }
+    } catch (error) {
+      
+    }
+  }
   if(!data) return null;
   return (
     <>
@@ -50,6 +63,7 @@ export const UserProfile = () => {
                   color={data.isFollowing ? 'default' : 'primary'}
                   variant="flat"
                   className='gap-2'
+                  onClick={handleFollow}
                   endContent={
                     data.isFollowing ? (
                       <MdOutlinePersonAddDisabled />
