@@ -1,5 +1,4 @@
 import React, { useContext, useState } from 'react'
-import {User} from '../../app/types';
 import {Input} from '../../components/input';
 import {ThemeContext} from '../theme-provider';
 import {useUpdateUserMutation} from '../../app/services/userApi';
@@ -9,11 +8,20 @@ import { Button, Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, Texta
 import { MdOutlineEmail } from 'react-icons/md';
 import {ErrorMessage} from '../errorMessge';
 import { hasErrorField } from '../../utils/has-error-field';
+import { User } from '../../app/types';
 
 type Props = {
     isOpen: boolean;
     onClose: () => void;
     user?: User;
+}
+
+type UserUp = {
+    email: string;
+    name?: string;
+    dateOfBirth?: Date;
+    bio?: string;
+    location?: string;
 }
 
 export const EditProfile = ({isOpen, onClose, user}: Props) => {
@@ -23,7 +31,7 @@ export const EditProfile = ({isOpen, onClose, user}: Props) => {
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const {id} = useParams<{id: string}>();
 
-    const {handleSubmit, control} = useForm({
+    const {handleSubmit, control} = useForm<UserUp>({
         mode: 'onChange',
         reValidateMode: 'onBlur',
         defaultValues: {
@@ -39,17 +47,18 @@ export const EditProfile = ({isOpen, onClose, user}: Props) => {
             setSelectedFile(e.target.files[0]);
         }
     }
-    const onSubmit = async(data: User) => {
+    const onSubmit = async(data: UserUp) => {
         if(id) {
             try {
+                const {name, email, dateOfBirth, bio, location} = data;
                 const formData = new FormData();
-                data.name && formData.append('name', data.name);
-                data.email && data.email !== user?.email && formData.append('email', data.email);
-                data.dateOfBirth && formData.append(
+                name && formData.append('name', name);
+                email && email !== email && formData.append('email', email);
+                dateOfBirth && formData.append(
                     'dateOfBirth', 
-                    new Date(data.dateOfBirth).toISOString());
-                data.bio && formData.append('bio', data.bio);
-                data.location && formData.append('location', data.location);
+                    new Date(dateOfBirth).toISOString());
+                bio && formData.append('bio', bio);
+                location && formData.append('location', location);
                 selectedFile && formData.append('avatar', selectedFile);
                 await updateUser({userData: formData, id}).unwrap();
                 onClose();
