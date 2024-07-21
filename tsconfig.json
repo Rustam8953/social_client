@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "declaration": true,
     "useDefineForClassFields": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "allowJs": false,
@@ -16,5 +17,6 @@
     "jsx": "react-jsx",
     "types": ["vitest/globals"]
   },
+  "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
