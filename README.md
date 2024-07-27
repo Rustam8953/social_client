@@ -1,27 +1,25 @@
-# vite-template-redux
-
-Uses [Vite](https://vitejs.dev/), [Vitest](https://vitest.dev/), and [React Testing Library](https://github.com/testing-library/react-testing-library) to create a modern [React](https://react.dev/) app compatible with [Create React App](https://create-react-app.dev/)
-
-```sh
-npx degit reduxjs/redux-templates/packages/vite-template-redux my-app
+# .env variables
+To run the application, it is necessary to create a .env file and add the following code to it.
+```
+DATABASE_URL="mongodb://${your_mongo_username}:${mongo_password}@localhost:27017/mydatabase?authSource=admin&directConnection=true"
+DOCKER_URL="mongodb://${your_mongo_username}:${mongo_password}@db-1:27017/mydatabase?authSource=admin&directConnection=true"
+SECRET_KEY="lolkekarbuzdogc98n287tc6wiyuwarIUH653r25E$%@#^#874g3bffsdgdsyfh87wr273tic8c9pK(#)U*($bfuevx)A_*#()&^&Y*FYS^%%#%@$Y*(*R_sk)"
+MONGO_INITDB_ROOT_USERNAME="${your_mongo_username}"
+MONGO_INITDB_ROOT_PASSWORD="${mongo_password}"
+DOCKER_PORTS="3001:3000"
 ```
 
-## Goals
+# Installation
+1. Clone repository:
 
-- Easy migration from Create React App or Vite
-- As beginner friendly as Create React App
-- Optimized performance compared to Create React App
-- Customizable without ejecting
+```bash
+git clone https://github.com/metathen/social_client.git
+git clone https://github.com/metathen/social_server.git
+cd social_server
+```
 
-## Scripts
+2. Run docker:
 
-- `dev`/`start` - start dev server and open browser
-- `build` - build for production
-- `preview` - locally preview production build
-- `test` - launch test runner
-
-## Inspiration
-
-- [Create React App](https://github.com/facebook/create-react-app/tree/main/packages/cra-template)
-- [Vite](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react)
-- [Vitest](https://github.com/vitest-dev/vitest/tree/main/examples/react-testing-lib)
+```bash
+docker compose up
+```
