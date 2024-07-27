@@ -1,5 +1,5 @@
 # .env variables
-To run the application, it is necessary to create a .env file and add the following code to it.
+To run the application, it is necessary to create a .env file in social_server dir and add the following code to it.
 ```
 DATABASE_URL="mongodb://${your_mongo_username}:${mongo_password}@localhost:27017/mydatabase?authSource=admin&directConnection=true"
 DOCKER_URL="mongodb://${your_mongo_username}:${mongo_password}@db-1:27017/mydatabase?authSource=admin&directConnection=true"
